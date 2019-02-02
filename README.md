@@ -6,7 +6,7 @@
 
 В консоли
 ```
-composer ale10257/yii2-maintenance-mode "@dev"
+composer require ale10257/yii2-maintenance-mode "@dev"
 ```
 
 или добавить в секцию `require` файла `composer.json`

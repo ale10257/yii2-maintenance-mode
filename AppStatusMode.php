@@ -26,9 +26,9 @@ class AppStatusMode extends Component
     /** @var string|array */
     public $ips;
     /** @var string  */
-    public $layoutPath = '@vendor/ale10257/change-status-application/views/main';
+    public $layoutPath = '@vendor/ale10257/yii2-maintenance-mode/views/main';
     /** @var string  */
-    public $viewPath = '@vendor/ale10257/change-status-application/views/index';
+    public $viewPath = '@vendor/ale10257/yii2-maintenance-mode/views/index';
     /** @var string  */
     public $commandPath = __DIR__;
     /** @var int  */
