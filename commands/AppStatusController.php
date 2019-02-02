@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace ale10257\statusApplication\commands;
+namespace ale10257\yii2MaintenanceMode\commands;
 
 use Yii;
 use yii\console\Controller;
@@ -16,7 +16,7 @@ use yii\helpers\Console;
  * Console controller for manage maintenance mode component for Yii framework 2.x.x version.
  *
  * @see \yii\console\Controller
- * @package ale10257\statusApplication\commands
+ * @package ale10257\yii2MaintenanceMode\commands
  */
 class AppStatusController extends Controller
 {

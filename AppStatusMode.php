@@ -1,6 +1,6 @@
 <?php
 
-namespace ale10257\statusApplication;
+namespace ale10257\yii2MaintenanceMode;
 
 use Yii;
 use yii\base\InvalidConfigException;
@@ -9,7 +9,7 @@ use yii\helpers\FileHelper;
 
 /**
  * Class AppStatusMode
- * @package ale10257\statusApplication
+ * @package ale10257\yii2MaintenanceMode
  *
  * @property string $filePath
  * @property bool $isDisabled
@@ -36,7 +36,7 @@ class AppStatusMode extends Component
     /** @var bool  */
     public $retryAfter = false;
     /** @var string  */
-    public $consoleController = 'ale10257\statusApplication\commands\AppStatusController';
+    public $consoleController = 'ale10257\yii2MaintenanceMode\commands\AppStatusController';
     /** @var array */
     public $roles;
 
@@ -141,7 +141,7 @@ class AppStatusMode extends Component
             $this->enabled = $this->checkIp();
         }
         if (!$this->enabled) {
-            $app->controllerMap['disabled'] = 'ale10257\statusApplication\controllers\AppStatusController';
+            $app->controllerMap['disabled'] = 'ale10257\yii2MaintenanceMode\controllers\AppStatusController';
             $app->catchAll = ['disabled'];
         }
     }

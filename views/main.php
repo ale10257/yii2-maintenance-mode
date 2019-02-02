@@ -6,7 +6,7 @@
  */
 
 use yii\helpers\Html;
-use ale10257\statusApplication\Asset;
+use ale10257\yii2MaintenanceMode\Asset;
 
 /**
  * Default layout of maintenance mode component for Yii framework 2.x.x version.

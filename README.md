@@ -6,13 +6,13 @@
 
 В консоли
 ```
-composer ale10257/change-status-application "@dev"
+composer ale10257/yii2-maintenance-mode "@dev"
 ```
 
 или добавить в секцию `require` файла `composer.json`
 
 ```
-"ale10257/change-status-application": "@dev"
+"ale10257/yii2-maintenance-mode": "@dev"
 ```
 По умолчанию, если вы выключили сайт, с помощь данного компонента, он будет закрыт для всех, в том числе и для администраторов. 
 
@@ -24,7 +24,7 @@ composer ale10257/change-status-application "@dev"
 <?php
 namespace app\components\statusApp;
 
-use ale10257\statusApplication\AppStatusMode;
+use ale10257\yii2MaintenanceMode;
 use Yii;
 
 class StatusApp extends AppStatusMode
@@ -94,7 +94,7 @@ protected function checkRoles()
 ```php
 'bootstrap' => [
 ...
-     'ale10257\statusApplication\CheckStatus'
+     'ale10257\yii2-maintenance-mode\CheckStatus'
 ...
 ],
 ...

@@ -5,9 +5,9 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace ale10257\statusApplication\controllers;
+namespace ale10257\yii2MaintenanceMode\controllers;
 
-use ale10257\statusApplication\AppStatusMode;
+use ale10257\yii2MaintenanceMode\AppStatusMode;
 use Yii;
 use yii\web\Controller;
 
@@ -15,7 +15,7 @@ use yii\web\Controller;
  * Default controller of maintenance mode component for Yii framework 2.x.x version.
  *
  * @see \yii\web\Controller
- * @package ale10257\statusApplication\controllers
+ * @package ale10257\yii2MaintenanceMode\controllers
  * @author Brusensky Dmitry <brussens@nativeweb.ru>
  * @since 0.2.0
  */

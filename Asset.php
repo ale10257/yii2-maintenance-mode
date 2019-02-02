@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace ale10257\statusApplication;
+namespace ale10257\yii2MaintenanceMode;
 
 use yii\web\AssetBundle;
 
@@ -14,7 +14,7 @@ use yii\web\AssetBundle;
  *
  * @since 0.2.0
  * @see \yii\web\AssetBundle
- * @package ale10257\statusApplication
+ * @package ale10257\yii2MaintenanceMode
  * @author Brusensky Dmitry <brussens@nativeweb.ru>
  */
 class Asset extends AssetBundle

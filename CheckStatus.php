@@ -1,5 +1,5 @@
 <?php
-namespace ale10257\statusApplication;
+namespace ale10257\yii2MaintenanceMode;
 
 use yii\base\BootstrapInterface;
 

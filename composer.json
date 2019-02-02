@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ale10257\\statusApplication\\": ""
+            "ale10257\\yii2MaintenanceMode\\": ""
         }
     }
 }
