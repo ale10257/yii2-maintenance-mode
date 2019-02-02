@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace brussens\maintenance;
+namespace ale10257\statusApplication;
 
 use yii\web\AssetBundle;
 
@@ -14,7 +14,7 @@ use yii\web\AssetBundle;
  *
  * @since 0.2.0
  * @see \yii\web\AssetBundle
- * @package brussens\maintenance
+ * @package ale10257\statusApplication
  * @author Brusensky Dmitry <brussens@nativeweb.ru>
  */
 class Asset extends AssetBundle
@@ -22,7 +22,7 @@ class Asset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@vendor/brussens/yii2-maintenance-mode/assets';
+    public $sourcePath = __DIR__ . '/assets';
     /**
      * @inheritdoc
      */

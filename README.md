@@ -1,146 +1,151 @@
-# Yii2 Maintenance mode component
-[![Latest Stable Version](https://poser.pugx.org/brussens/yii2-maintenance-mode/v/stable)](https://packagist.org/packages/brussens/yii2-maintenance-mode)
-[![Total Downloads](https://poser.pugx.org/brussens/yii2-maintenance-mode/downloads)](https://packagist.org/packages/brussens/yii2-maintenance-mode)
-[![License](https://poser.pugx.org/brussens/yii2-maintenance-mode/license)](https://packagist.org/packages/brussens/yii2-maintenance-mode)
-## Install
-Either run
-```
-php composer.phar require --prefer-dist brussens/yii2-maintenance-mode "*"
-```
+# Yii2 enable/disable application component
 
-or add
+#### [За основу данного компонента взят компонент Maintenance mode, автор: Brusenskiy Dmitry](https://github.com/brussens/yii2-maintenance-mode)
 
+## Установка
+
+В консоли
 ```
-"brussens/yii2-maintenance-mode": "*"
+composer ale10257/change-status-application "@dev"
 ```
 
-to the require section of your `composer.json` file.
+или добавить в секцию `require` файла `composer.json`
 
-Add to your config file:
+```
+"ale10257/change-status-application": "@dev"
+```
+По умолчанию, если вы выключили сайт, с помощь данного компонента, он будет закрыт для всех, в том числе и для администраторов. 
+
+Т.к. проверка ролей в разных приложениях на Yii2 осуществляется по разному, для полноценной работы необходимо создать ваш собственный компонент для включения/выключения вашего приложения, в котором нужно прописать все ваши методы для проверки доступа.
+
+Например:
+
 ```php
-'bootstrap' => ['log', 'maintenanceMode'],
-...
-'components' => [
-    'maintenanceMode' => [
-        'class' => 'brussens\maintenance\MaintenanceMode',
-    ],
-    ...
-],
+<?php
+namespace app\components\statusApp;
+
+use ale10257\statusApplication\AppStatusMode;
+use Yii;
+
+class StatusApp extends AppStatusMode
+{
+    /** @var string */
+    public $commandPath = __DIR__;
+
+    protected function checkRoot()
+    {
+        $app = Yii::$app;
+        if (!$app->user->isGuest) {
+            if ($app->user->identity->isRoot()) {
+                $this->enabled = true;
+            }
+        }
+    }
+
+    protected function filtering()
+    {
+        $this->checkRoot();
+        parent::filtering();
+    }
+}
 ```
-## Options
+
+<b>Важно:</b> публичная переменная `public $commandPath = __DIR__;` определяет директорию для записи файла о включении/выключении приложения. Данная директория должна быть доступна для записи.
+
+<b>Важно:</b> все ваши методы для проверки должны быть вызваны в методе `filtering`. Например, в данном примере, если у пользователя есть роль Root, то для него приложение включено `$this->enabled = true;`
+
+### Options
 ```php
 'maintenanceMode' => [
-    // Component class namespace
-    'class' => 'brussens\maintenance\MaintenanceMode',
+    // Page title default
+    'title' => 'Site temporarily unavailable',
 
-    // Page title
-    'title' => 'Custom title',
-
-    // Mode status
+    // Application status
     'enabled' => true,
 
-    // Route to action
-    'route' => 'maintenance/index',
-
-    // Show title
-    'title' => 'this site is under maintenance',
-
-    // Show message
-    'message' => 'Sorry, perform technical works.',
-
-    // Allowed user names
-    'users' => [
-        'BrusSENS',
-    ],
+    // Show message default
+    'message' => 'Sorry, technical work in progress',
 
     // Allowed roles
-    'roles' => [
-        'administrator',
-    ],
+    'roles' => [],
 
-    // Allowed IP addresses
-    'ips' => [
-        '127.0.0.1',
-    ],
-
-    // Allowed URLs
-    'urls' => [
-        'site/login'
-    ],
-
-    // Layout path
-    'layoutPath' => '@web/maintenance/layout',
-
-    // View path
-    'viewPath' => '@web/maintenance/view',
-
-    // User name attribute name
-    'usernameAttribute' => 'login',
+    // Allowed IP addresses example: '127.0.0.1'
+    'ips' => [],
 
     // HTTP Status Code
     'statusCode' => 503,
 
-    //Retry-After header
-    'retryAfter' => 120 //or Wed, 21 Oct 2015 07:28:00 GMT for example
+    //Retry-After example: header 120 or Wed, 21 Oct 2015 07:28:00 GMT
+    'retryAfter'
 ],
 ```
 
-## Set maintenance mode by console command
+Если вы инициализируете `'roles' => [admin, role1, role2]`, то в вашем компоненте необходимо самостоятельно реализовать метод 
 
-Add to your console config file:
 ```php
-'bootstrap' => ['log', 'maintenanceMode'],
+protected function checkRoles()
+{
+    // your check
+}
+```
+
+### Для работы компонента необходимо добавить в конфигурационный файл web приложения:
+
+```php
+'bootstrap' => [
+...
+     'ale10257\statusApplication\CheckStatus'
+...
+],
 ...
 'components' => [
-    'maintenanceMode' => [
-        'class' => 'brussens\maintenance\MaintenanceMode',
+...
+    'appStatusMode' => [
+        'class' => 'app\components\statusApp\StatusApp', // ваш компонент
     ],
 ...
 ],
 ```
-Change your web config file:
+
+### Включить/выключить приложение из консоли
+
+Добавить в конфигурационный файл консольного приложения:
+
 ```php
-'maintenanceMode' => [
-    'class' => 'brussens\maintenance\MaintenanceMode',
-    'enabled' => false
+'bootstrap' => [
+    'log',
+    'appStatusMode'
+],
+...
+'components' => [
+...
+    'appStatusMode' => [
+        'class' => 'app\components\statusApp\StatusApp', // ваш компонент
+    ],
+...
 ],
 ```
-Now you can set mod by command:
-```
-php yii maintenance/enable
-```
-```
-php yii maintenance/disable
-```
-## Allow display debug panel
 
-Add the following rules in the 'urls' section of component settings:
+После внесения изменений в конфигурационный файл можно включать/выключать приложение командами:
 
 ```php
-'urls' => [
-    'debug/default/toolbar',
-    'debug/default/view'
-]
+php yii  app-status/enable
+php yii  app-status/disable 'Title page' 'Your message'
 ```
 
-## Switch mode in dashboard
+По умолчанию `Title page = 'Site temporarily unavailable', Your message = 'Sorry, technical work in progress'`
+
+Поэтому команду для выключения приложения можно вызывать без параметров
 
 ```php
-class DashboardController extends Controller
-{
-    ...
-    public function actionEnable()
-    {
-        ...
-        Yii::$app->maintenance->enable();
-        ...
-    }
-    public function actionDisable()
-    {
-        ...
-        Yii::$app->maintenance->disable();
-        ...
-    }
-    ...
-}
+php yii  app-status/disable
+```
+
+### Включить/выключить приложение из панели управления приложением
+
+В контроллере вызовите методы:
+
+```php
+\Yii->$app->appStatusMode->enable();
+\Yii->$app->appStatusMode->disable('Title page', 'Your message'); // можно вызывать без параметров
 ```

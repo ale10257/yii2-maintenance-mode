@@ -14,10 +14,12 @@ use yii\helpers\Html;
  * @author Brusensky Dmity <brussens@nativeweb.ru>
  */
 
-/** @var $title string */
-/** @var $message string */
+/**
+ * @var $title string
+ * @var $msg string
+ */
 ?>
 <h1><?= Html::encode($title) ?></h1>
 <div>
-    <p><?= Html::encode($message) ?></p>
+    <p><?= Html::encode($msg) ?></p>
 </div>

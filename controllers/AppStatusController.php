@@ -5,8 +5,9 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace brussens\maintenance\controllers;
+namespace ale10257\statusApplication\controllers;
 
+use ale10257\statusApplication\AppStatusMode;
 use Yii;
 use yii\web\Controller;
 
@@ -14,18 +15,22 @@ use yii\web\Controller;
  * Default controller of maintenance mode component for Yii framework 2.x.x version.
  *
  * @see \yii\web\Controller
- * @package brussens\maintenance\controllers
+ * @package ale10257\statusApplication\controllers
  * @author Brusensky Dmitry <brussens@nativeweb.ru>
  * @since 0.2.0
  */
-class MaintenanceController extends Controller
+class AppStatusController extends Controller
 {
+    /** @var AppStatusMode */
+    private $appStatusMode;
+
     /**
      * Initialize controller.
      */
     public function init()
     {
-        $this->layout = Yii::$app->maintenanceMode->layoutPath;
+        $this->appStatusMode = Yii::$app->appStatusMode;
+        $this->layout = $this->appStatusMode->layoutPath;
         parent::init();
     }
 
@@ -35,15 +40,7 @@ class MaintenanceController extends Controller
      */
     public function actionIndex()
     {
-        $app = Yii::$app;
-
-        if ($app->getRequest()->getIsAjax()) {
-            return false;
-        }
-
-        return $this->render($app->maintenanceMode->viewPath, [
-            'title' => $app->maintenanceMode->title,
-            'message' => $app->maintenanceMode->message
-        ]);
+        $data = json_decode(file_get_contents($this->appStatusMode->filePath), true);
+        return $this->render($this->appStatusMode->viewPath, $data);
     }
 } 
