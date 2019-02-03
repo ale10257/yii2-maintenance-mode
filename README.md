@@ -24,7 +24,7 @@ composer require ale10257/yii2-maintenance-mode "@dev"
 <?php
 namespace app\components\statusApp;
 
-use ale10257\yii2MaintenanceMode;
+use ale10257\yii2MaintenanceMode\AppStatusMode;
 use Yii;
 
 class StatusApp extends AppStatusMode
