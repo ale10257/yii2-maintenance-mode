@@ -23,7 +23,7 @@ class AppStatusMode extends Component
     public $title = 'Site temporarily unavailable';
     /** @var string  */
     public $message = 'Sorry, technical work in progress';
-    /** @var string|array */
+    /** @var array */
     public $ips;
     /** @var string  */
     public $layoutPath = '@vendor/ale10257/yii2-maintenance-mode/views/main';
