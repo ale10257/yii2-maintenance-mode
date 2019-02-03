@@ -28,7 +28,7 @@ class AppStatusController extends Controller
     public function actionEnable()
     {
         $appStatusMode = Yii::$app->appStatusMode;
-        if (!$appStatusMode->getIsDisabled()) {
+        if (!$appStatusMode->isDisabled) {
             $this->stdout("Application already enabled" . PHP_EOL, Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;
         }
@@ -41,7 +41,7 @@ class AppStatusController extends Controller
     {
         $appStatusMode = Yii::$app->appStatusMode;
 
-        if ($appStatusMode->getIsDisabled()) {
+        if ($appStatusMode->isDisabled) {
             $this->stdout("Application already disabled" . PHP_EOL, Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;
         }
